@@ -3,8 +3,9 @@ import Feature from '@/components/Feature';
 import Grid from '@/components/Grid';
 import Teaser from '@/components/Teaser';
 import Hero from '@/components/Hero';
-import Button from '@/components/Button';
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc';
+import BlogPost from '@/components/BlogPost';
+import BlogList from '@/components/BlogList';
 
 export const getStoryblokApi = storyblokInit({
 	accessToken: process.env.STORYBLOK_DELIVERY_API_TOKEN,
@@ -15,7 +16,8 @@ export const getStoryblokApi = storyblokInit({
 		grid: Grid,
 		teaser: Teaser,
 		hero: Hero,
-		button: Button,
+		"blog-post": BlogPost,
+		"blog-list": BlogList,
 	},
 	apiOptions: {
 		/** Set the correct region for your space. Learn more: https://www.storyblok.com/docs/packages/storyblok-js#example-region-parameter */

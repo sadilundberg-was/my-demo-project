@@ -14,7 +14,6 @@ export default function RootLayout({ children }) {
 				<body>
 					<div className="container mx-auto px-4">
 						{children}
-						<footer>All rights reserved © {currentYear} </footer>
 					</div>
 				</body>
 			</html>
