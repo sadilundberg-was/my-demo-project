@@ -2,8 +2,6 @@ import { storyblokEditable, StoryblokServerComponent } from "@storyblok/react/rs
 import Link from "next/link";
 
 export default function BlogPost({ blok }) {
-  const author = blok.author;
-
   return (
     <article className="blog-post" {...storyblokEditable(blok)}>
       <style>{`
@@ -60,14 +58,11 @@ export default function BlogPost({ blok }) {
 
       <p className="summary">{blok.summary}</p>
 
-      {author?.content?.name && (
-        <p className="author">
-          Av{" "}
-          <Link href={`/authors/${author.slug}`}>
-            {author.content.name}
-          </Link>
-        </p>
-      )}
+      {(blok.author ?? []).map((author, index) => (
+        <Link key={index} href={`/authors/${author.slug}`}>
+          {author.content?.name ?? author.name}
+        </Link>
+      ))}
 
       {blok.body?.map((nestedBlok) => (
         <StoryblokServerComponent blok={nestedBlok} key={nestedBlok._uid} />
