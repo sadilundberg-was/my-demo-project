@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
-    "@storyblok/react": "^5.4.22",
+    "@storyblok/react": "^7.3.1",
     "@tailwindcss/postcss": "^4.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
