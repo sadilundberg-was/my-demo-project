@@ -12,6 +12,7 @@ import NavLink from '@/components/NavLink';
 import FilteredPosts from '@/components/FilteredPosts';
 import Toolbar from '@/components/Toolbar';
 import SearchBar from '@/components/SearchBar';
+import Author from '@/components/Author';
 
 export const getStoryblokApi = storyblokInit({
 	accessToken: process.env.STORYBLOK_DELIVERY_API_TOKEN,
@@ -30,7 +31,7 @@ export const getStoryblokApi = storyblokInit({
 		"filtered-posts": FilteredPosts,
 		toolbar: Toolbar,
 		"search-bar": SearchBar,
-		
+		author: Author,
 	},
 	apiOptions: {
 		/** Set the correct region for your space. Learn more: https://www.storyblok.com/docs/packages/storyblok-js#example-region-parameter */

@@ -7,8 +7,8 @@ export async function generateStaticParams() {
 
   const { data } = await storyblokApi.getStories({
     version: "draft",
-    starts_with: "blog/",
-    content_type: "blog-post",
+    starts_with: "authors/",
+    content_type: "author",
   });
 
   return data.stories.map((story) => ({
@@ -16,15 +16,14 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPostPage({ params }) {
+export default async function AuthorPage({ params }) {
   const { slug } = await params;
   const storyblokApi = getStoryblokApi();
 
   let story;
   try {
-    const { data } = await storyblokApi.get(`cdn/stories/blog/${slug}`, {
+    const { data } = await storyblokApi.get(`cdn/stories/authors/${slug}`, {
       version: "draft",
-      resolve_relations: "blog-post.author",
     });
     story = data.story;
   } catch {
