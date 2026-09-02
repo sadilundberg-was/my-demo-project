@@ -18,19 +18,26 @@ export default async function FilteredPosts({ blok, slug }) {
   const posts = data.stories;
 
   return (
-    <section {...storyblokEditable(blok)}>
-      {blok.heading && <h2>{blok.heading}</h2>}
+    <section className="space-y-6" {...storyblokEditable(blok)}>
+      {blok.heading && (
+        <h2 className="text-2xl font-semibold tracking-tight">{blok.heading}</h2>
+      )}
 
       {posts.length === 0 ? (
-        <p>{blok.empty_text || "Inga inlägg."}</p>
+        <p className="text-muted-foreground">{blok.empty_text || "Inga inlägg."}</p>
       ) : (
-        <ul>
+        <ul className="divide-y divide-border">
           {posts.map((post) => (
-            <li key={post.uuid}>
-              <Link href={`/${post.full_slug}`}>
+            <li key={post.uuid} className="space-y-1.5 py-5 first:pt-0 last:pb-0">
+              <Link
+                href={`/${post.full_slug}`}
+                className="text-lg font-medium text-foreground transition-colors hover:text-muted-foreground"
+              >
                 {post.content.title}
               </Link>
-              {post.content.summary && <p>{post.content.summary}</p>}
+              {post.content.summary && (
+                <p className="text-muted-foreground">{post.content.summary}</p>
+              )}
             </li>
           ))}
         </ul>

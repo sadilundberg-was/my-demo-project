@@ -17,16 +17,14 @@ export default async function RootLayout({ children }) {
 	return (
 		<StoryblokProvider>
 			<html lang="en">
-				<body>
-					{headerBlok && <StoryblokServerComponent blok={headerBlok} />}
-					<main className='container mx-auto'>
-						{children}
-					</main>
-					
-					{footerBlok && <StoryblokServerComponent blok={footerBlok} />}
+				<body className="min-h-screen antialiased">
+					<div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4">
+						{headerBlok && <StoryblokServerComponent blok={headerBlok} />}
+						<main className="flex-1 py-10">{children}</main>
+						{footerBlok && <StoryblokServerComponent blok={footerBlok} />}
+					</div>
 				</body>
 			</html>
 		</StoryblokProvider>
 	);
 }
-

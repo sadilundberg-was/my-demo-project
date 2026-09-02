@@ -9,84 +9,55 @@ export default async function BlogList({ blok, query = "" }) {
     version: "draft",
     starts_with: "blog/",
     content_type: "blog-post",
-    resolve_relations: "blog -post.author",
-    ...(query && { j: query }),
+    resolve_relations: "blog-post.author",
+    ...(query && { search_term: query }),
   });
 
   const stories = data.stories;
 
   return (
-    <section className="blog-list" {...storyblokEditable(blok)}>
-      <style>{`
-        .blog-list {
-          max-width: 800px;
-          margin: 40px auto;
-        }
-
-        .blog-list article {
-          display: flex;
-          gap: 20px;
-          padding: 20px 0;
-          border-bottom: 1px solid #ddd;
-        }
-
-        .blog-list img {
-          width: 160px;
-          height: 100px;
-          object-fit: cover;
-          border-radius: 6px;
-        }
-
-        .blog-list h2 {
-          margin: 0 0 8px;
-        }
-
-        .blog-list h2 a {
-          color: #222;
-          text-decoration: none;
-        }
-
-        .blog-list p {
-          color: #666;
-          margin: 5px 0;
-        }
-
-        .blog-list .author {
-          font-size: 14px;
-        }
-      `}</style>
-
-      {blok.heading && <h1>{blok.heading}</h1>}
+    <section className="space-y-8" {...storyblokEditable(blok)}>
+      {blok.heading && (
+        <h1 className="text-3xl font-semibold tracking-tight">{blok.heading}</h1>
+      )}
 
       {stories.length === 0 ? (
-        <p>{blok.empty_text || "Inga inlägg."}</p>
+        <p className="text-muted-foreground">{blok.empty_text || "Inga inlägg."}</p>
       ) : (
-        stories.map((story) => (
-          <article key={story.uuid}>
-            {story.content.coverImage?.filename && (
-              <img
-                src={story.content.coverImage.filename}
-                alt={story.content.coverImage.alt || story.content.title}
-              />
-            )}
-
-            <div>
-              <h2>
-                <Link href={`/${story.full_slug}`}>
-                  {story.content.title}
-                </Link>
-              </h2>
-
-              <p>{story.content.summary}</p>
-
-              {story.content.author?.content?.name && (
-                <p className="author">
-                  Av {story.content.author.content.name}
-                </p>
+        <div className="divide-y divide-border">
+          {stories.map((story) => (
+            <article key={story.uuid} className="flex gap-5 py-6 first:pt-0 last:pb-0">
+              {story.content.coverImage?.filename && (
+                <img
+                  src={story.content.coverImage.filename}
+                  alt={story.content.coverImage.alt || story.content.title}
+                  className="h-24 w-40 shrink-0 rounded-md object-cover"
+                />
               )}
-            </div>
-          </article>
-        ))
+
+              <div className="min-w-0 space-y-1.5">
+                <h2 className="text-xl font-medium leading-snug">
+                  <Link
+                    href={`/${story.full_slug}`}
+                    className="text-foreground transition-colors hover:text-muted-foreground"
+                  >
+                    {story.content.title}
+                  </Link>
+                </h2>
+
+                {story.content.summary && (
+                  <p className="text-muted-foreground">{story.content.summary}</p>
+                )}
+
+                {story.content.author?.content?.name && (
+                  <p className="text-sm text-muted-foreground">
+                    Av {story.content.author.content.name}
+                  </p>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
       )}
     </section>
   );

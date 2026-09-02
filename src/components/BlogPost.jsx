@@ -5,72 +5,61 @@ import Link from "next/link";
 export default function BlogPost({ blok }) {
   const renderedContent = renderRichText(blok.content);
   return (
-		<article className="blog-post" {...storyblokEditable(blok)}>
-			<style>{`
-        .blog-post {
-          max-width: 800px;
-          margin: 40px auto;
-        }
+    <article className="space-y-5" {...storyblokEditable(blok)}>
+      <p>
+        <Link
+          href="/blog"
+          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          ← Tillbaka till bloggen
+        </Link>
+      </p>
 
-        .blog-post img {
-          width: 100%;
-          max-height: 400px;
-          object-fit: cover;
-          border-radius: 8px;
-          margin: 20px 0;
-        }
+      {blok.coverImage?.filename && (
+        <img
+          src={blok.coverImage.filename}
+          alt=""
+          className="h-auto max-h-96 w-full rounded-lg object-cover"
+        />
+      )}
 
-        .blog-post h1 {
-          margin: 10px 0;
-          font-size: 36px;
-        }
+      <h1 className="text-4xl font-semibold tracking-tight">{blok.title}</h1>
 
-        .blog-post .date {
-          color: #888;
-          font-size: 14px;
-        }
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+        {blok.publishedDate && <time>{blok.publishedDate}</time>}
+        {(blok.author ?? []).length > 0 && (
+          <>
+            {blok.publishedDate && <span aria-hidden="true">·</span>}
+            <span className="flex flex-wrap gap-x-2">
+              {(blok.author ?? []).map((author, index) => (
+                <Link
+                  key={index}
+                  href={`/authors/${author.slug}`}
+                  className="text-foreground underline-offset-4 hover:underline"
+                >
+                  {author.content?.name ?? author.name}
+                </Link>
+              ))}
+            </span>
+          </>
+        )}
+      </div>
 
-        .blog-post .summary {
-          font-size: 18px;
-          color: #555;
-          margin: 20px 0;
-        }
+      {blok.summary && (
+        <p className="text-lg leading-relaxed text-muted-foreground">
+          {blok.summary}
+        </p>
+      )}
 
-        .blog-post .author {
-          font-size: 14px;
-          margin-bottom: 30px;
-        }
 
-        .blog-post a {
-          color: #333;
-        }
-      `}</style>
+      <div
+        className="rich-text"
+        dangerouslySetInnerHTML={{ __html: renderedContent }}
+      />
 
-			<p>
-				<Link href="/blog">← Tillbaka till bloggen</Link>
-			</p>
-
-			{blok.coverImage?.filename && (
-				<img src={blok.coverImage.filename} alt="" />
-			)}
-
-			<h1>{blok.title}</h1>
-
-			<p className="date">{blok.publishedDate}</p>
-
-			<p className="summary">{blok.summary}</p>
-
-			{(blok.author ?? []).map((author, index) => (
-				<Link key={index} href={`/authors/${author.slug}`}>
-					{author.content?.name ?? author.name}
-				</Link>
-			))}
-
-			<div className="rich-text" dangerouslySetInnerHTML={{ __html: renderedContent }} />
-
-			{blok.body?.map((nestedBlok) => (
-				<StoryblokServerComponent blok={nestedBlok} key={nestedBlok._uid} />
-			))}
-		</article>
-	);
+      {blok.body?.map((nestedBlok) => (
+        <StoryblokServerComponent blok={nestedBlok} key={nestedBlok._uid} />
+      ))}
+    </article>
+  );
 }

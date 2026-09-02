@@ -128,6 +128,24 @@
     }
 }
 
-.rich-text h2 { font-size: 1.5rem; font-weight: bold; margin-top: 1.5rem; }
-.rich-text p  { margin-bottom: 1rem; }
-.rich-text ul { list-style: disc; margin-left: 1.5rem; }
+.rich-text {
+  @apply space-y-4 leading-relaxed text-foreground;
+}
+.rich-text h2 {
+  @apply mt-8 text-2xl font-semibold tracking-tight;
+}
+.rich-text h3 {
+  @apply mt-6 text-xl font-medium tracking-tight;
+}
+.rich-text p {
+  @apply text-foreground/90;
+}
+.rich-text ul {
+  @apply list-disc space-y-1 pl-6;
+}
+.rich-text a {
+  @apply underline underline-offset-4;
+}
+.rich-text img {
+  @apply my-4 h-auto max-h-96 w-full rounded-lg object-cover;
+}
