@@ -6,6 +6,12 @@ import Hero from '@/components/Hero';
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc';
 import BlogPost from '@/components/BlogPost';
 import BlogList from '@/components/BlogList';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import NavLink from '@/components/NavLink';
+import FilteredPosts from '@/components/FilteredPosts';
+import Toolbar from '@/components/Toolbar';
+import SearchBar from '@/components/SearchBar';
 
 export const getStoryblokApi = storyblokInit({
 	accessToken: process.env.STORYBLOK_DELIVERY_API_TOKEN,
@@ -18,6 +24,13 @@ export const getStoryblokApi = storyblokInit({
 		hero: Hero,
 		"blog-post": BlogPost,
 		"blog-list": BlogList,
+		header: Header,
+		footer: Footer,
+		"nav-link": NavLink,
+		"filtered-posts": FilteredPosts,
+		toolbar: Toolbar,
+		"search-bar": SearchBar,
+		
 	},
 	apiOptions: {
 		/** Set the correct region for your space. Learn more: https://www.storyblok.com/docs/packages/storyblok-js#example-region-parameter */

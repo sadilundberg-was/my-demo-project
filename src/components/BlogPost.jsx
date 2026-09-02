@@ -1,10 +1,12 @@
 import { storyblokEditable, StoryblokServerComponent } from "@storyblok/react/rsc";
+import { renderRichText } from "@storyblok/react";
 import Link from "next/link";
 
 export default function BlogPost({ blok }) {
+  const renderedContent = renderRichText(blok.content);
   return (
-    <article className="blog-post" {...storyblokEditable(blok)}>
-      <style>{`
+		<article className="blog-post" {...storyblokEditable(blok)}>
+			<style>{`
         .blog-post {
           max-width: 800px;
           margin: 40px auto;
@@ -44,29 +46,31 @@ export default function BlogPost({ blok }) {
         }
       `}</style>
 
-      <p>
-        <Link href="/blog">← Tillbaka till bloggen</Link>
-      </p>
+			<p>
+				<Link href="/blog">← Tillbaka till bloggen</Link>
+			</p>
 
-      {blok.coverImage?.filename && (
-        <img src={blok.coverImage.filename} alt="" />
-      )}
+			{blok.coverImage?.filename && (
+				<img src={blok.coverImage.filename} alt="" />
+			)}
 
-      <h1>{blok.title}</h1>
+			<h1>{blok.title}</h1>
 
-      <p className="date">{blok.publishedDate}</p>
+			<p className="date">{blok.publishedDate}</p>
 
-      <p className="summary">{blok.summary}</p>
+			<p className="summary">{blok.summary}</p>
 
-      {(blok.author ?? []).map((author, index) => (
-        <Link key={index} href={`/authors/${author.slug}`}>
-          {author.content?.name ?? author.name}
-        </Link>
-      ))}
+			{(blok.author ?? []).map((author, index) => (
+				<Link key={index} href={`/authors/${author.slug}`}>
+					{author.content?.name ?? author.name}
+				</Link>
+			))}
 
-      {blok.body?.map((nestedBlok) => (
-        <StoryblokServerComponent blok={nestedBlok} key={nestedBlok._uid} />
-      ))}
-    </article>
-  );
+			<div className="rich-text" dangerouslySetInnerHTML={{ __html: renderedContent }} />
+
+			{blok.body?.map((nestedBlok) => (
+				<StoryblokServerComponent blok={nestedBlok} key={nestedBlok._uid} />
+			))}
+		</article>
+	);
 }

@@ -2,14 +2,15 @@ import { storyblokEditable } from "@storyblok/react/rsc";
 import { getStoryblokApi } from "@/lib/storyblok";
 import Link from "next/link";
 
-export default async function BlogList({ blok }) {
+export default async function BlogList({ blok, query = "" }) {
   const storyblokApi = getStoryblokApi();
 
   const { data } = await storyblokApi.getStories({
     version: "draft",
     starts_with: "blog/",
     content_type: "blog-post",
-    resolve_relations: "blog-post.author",
+    resolve_relations: "blog -post.author",
+    ...(query && { j: query }),
   });
 
   const stories = data.stories;
