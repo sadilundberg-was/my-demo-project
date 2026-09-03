@@ -1,18 +1,18 @@
 import { storyblokEditable, StoryblokServerComponent } from "@storyblok/react/rsc";
 import { renderRichText } from "@storyblok/react";
-import Link from "next/link";
+import Applink from "./AppLink";
 
 export default function BlogPost({ blok }) {
   const renderedContent = renderRichText(blok.content);
   return (
     <article className="space-y-5" {...storyblokEditable(blok)}>
       <p>
-        <Link
+        <Applink
           href="/blog"
           className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           ← Tillbaka till bloggen
-        </Link>
+        </Applink>
       </p>
 
       {blok.coverImage?.filename && (
@@ -32,13 +32,13 @@ export default function BlogPost({ blok }) {
             {blok.publishedDate && <span aria-hidden="true">·</span>}
             <span className="flex flex-wrap gap-x-2">
               {(blok.author ?? []).map((author, index) => (
-                <Link
+                <Applink
                   key={index}
                   href={`/authors/${author.slug}`}
                   className="text-foreground underline-offset-4 hover:underline"
                 >
                   {author.content?.name ?? author.name}
-                </Link>
+                </Applink>
               ))}
             </span>
           </>
