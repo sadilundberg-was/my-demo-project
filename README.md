@@ -52,7 +52,7 @@ To render a preview of the local project in the Visual Editor, follow these step
 3. Save.
 4. Open the `home` story.
 5. Click **Config**.
-6. Type `/` in the **Real path**.
+6. Type `/` in the **Real path**.dsds
 
 Run the development server with HTTPS enabled:
 ```sh
